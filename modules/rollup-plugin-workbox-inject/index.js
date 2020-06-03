@@ -43,36 +43,36 @@ function workboxInject(config) {
 
       // globDirectory might not be set, as developers can just provide
       // additionalManifestEntries and forgo globbing.
-      if (options.globDirectory) {
-        const outputDir = outputOptions.dir ||
-          upath.dirname(upath.resolve(outputOptions.file));
+      // if (options.globDirectory) {
+      //   const outputDir = outputOptions.dir ||
+      //     upath.dirname(upath.resolve(outputOptions.file));
 
-        // Make sure we leave the source service worker and any output of this
-        // specific Rollup compilation out of the precache manifest.
-        for (const chunk of Object.values(bundle)) {
-          const fileRebasedToGlobDirectory = rebasePath({
-            file: upath.resolve(outputDir, chunk.fileName),
-            baseDirectory: options.globDirectory,
-          });
-          // Sourcemaps might be disabled, but adding something extra to
-          // globIgnores doesn't hurt.
-          const mapFile = `${fileRebasedToGlobDirectory}.map`;
+      //   // Make sure we leave the source service worker and any output of this
+      //   // specific Rollup compilation out of the precache manifest.
+      //   for (const chunk of Object.values(bundle)) {
+      //     const fileRebasedToGlobDirectory = rebasePath({
+      //       file: upath.resolve(outputDir, chunk.fileName),
+      //       baseDirectory: options.globDirectory,
+      //     });
+      //     // Sourcemaps might be disabled, but adding something extra to
+      //     // globIgnores doesn't hurt.
+      //     const mapFile = `${fileRebasedToGlobDirectory}.map`;
 
-          options.globIgnores.push(
-            fileRebasedToGlobDirectory,
-            mapFile,
-          );
+      //     options.globIgnores.push(
+      //       fileRebasedToGlobDirectory,
+      //       mapFile,
+      //     );
 
-          // If set, this should be the path to the original source module.
-          if (chunk.facadeModuleId) {
-            const moduleRebasedToGlobDirectory = rebasePath({
-              file: chunk.facadeModuleId,
-              baseDirectory: options.globDirectory,
-            });
-            options.globIgnores.push(moduleRebasedToGlobDirectory);
-          }
-        }
-      }
+      //     // If set, this should be the path to the original source module.
+      //     if (chunk.facadeModuleId) {
+      //       const moduleRebasedToGlobDirectory = rebasePath({
+      //         file: chunk.facadeModuleId,
+      //         baseDirectory: options.globDirectory,
+      //       });
+      //       options.globIgnores.push(moduleRebasedToGlobDirectory);
+      //     }
+      //   }
+      // }
 
       const { manifestEntries, count, warnings, size } = await getFileManifestEntries(options);
 
